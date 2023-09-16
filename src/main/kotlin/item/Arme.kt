@@ -1,5 +1,7 @@
 package item
 
+import personnage.Personnage
+
 class Arme(
      nom: String,
      description: String,
@@ -18,6 +20,10 @@ class Arme(
         } else {
             return resultatLancer
         }
+    }
+
+    override fun utiliser(cible: Personnage) {
+        cible.equiperArme(this)
     }
 
     override fun toString(): String {

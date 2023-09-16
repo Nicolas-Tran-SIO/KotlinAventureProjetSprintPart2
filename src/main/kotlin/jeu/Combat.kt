@@ -1,8 +1,8 @@
 package jeu
 
-import item.Potion
+
 import personnage.Personnage
-import kotlin.random.Random
+
 
 class Combat(
     val joueur: Personnage,
@@ -16,9 +16,10 @@ var nombreTours:Int =1
         println("1. Attaquer")
         println("2. Boire une potion")
         println("3. Passer")
-        print("Choisissez une action (1, 2 ou 3): ")
+        println("4. Afficher inventaire")
+        print("Choisissez une action (1, 2, 3, 4): ")
         val choix = readLine()?.toIntOrNull() ?: 0
-        println("\u001B[34m");
+        println("\u001B[34m")
         when (choix) {
             1 -> {
                 joueur.attaquer(monstre)
@@ -28,6 +29,19 @@ var nombreTours:Int =1
             }
             3 -> {
                 println("${joueur.nom} choisit de passer.")
+            }
+            4 -> {
+                // Afficher l'inventaire
+                joueur.afficherInventaire()
+                // Demander au joueur de choisir un objet à utiliser
+                print("Choisissez un objet à utiliser (entrez le numéro) : ")
+                val choixObjet = readln().toInt()
+                if ( choixObjet >= 0 && choixObjet < joueur.inventaire.size) {
+                    val objetChoisi = joueur.inventaire[choixObjet]
+                    objetChoisi.utiliser(joueur)
+                } else {
+                    println("Choix invalide.")
+                }
             }
             else -> {
                 println("Action invalide. Choisissez 1 pour attaquer, 2 pour boire une potion ou 3 pour passer.")
@@ -39,7 +53,7 @@ var nombreTours:Int =1
     // Méthode pour simuler un tour de combat du monstre
     fun tourDeMonstre() {
         println("---Tour de ${monstre.nom} (points de vie: ${monstre.pointDeVie}---)\u001B[31m")
-        val nbAlea=(0..100).random();
+        val nbAlea=(0..100).random()
         // Le monstre a une faible chance (par exemple, 10%) de boire une potion s'il est blessé
         if (monstre.pointDeVie < monstre.pointDeVieMax / 2 && nbAlea < 10  && monstre.aUnePotion()) {
                 monstre.boirePotion()
@@ -77,11 +91,12 @@ var nombreTours:Int =1
             println("Game over ! ${joueur.nom} a été vaincu !")
             println("Le combat recommence")
 
-            this.joueur.pointDeVie=this.joueur.pointDeVieMax;
-            this.monstre.pointDeVie=this.monstre.pointDeVieMax;
-            this.executerCombat();
+            this.joueur.pointDeVie=this.joueur.pointDeVieMax
+            this.monstre.pointDeVie=this.monstre.pointDeVieMax
+            this.executerCombat()
         } else {
-            println("Bravo ! ${monstre.nom} a été vaincu !")
+            println("BRAVO ! ${monstre.nom} a été vaincu !")
+            this.joueur.loot(monstre)
         }
     }
 }

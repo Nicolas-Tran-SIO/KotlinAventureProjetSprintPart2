@@ -19,13 +19,14 @@ fun main() {
     joueur.inventaire.add(lance)
     joueur.inventaire.add(potionDeSoin1)
 
-    val kobold=Personnage("Marvin le Kobold",25,25,3,4,6,12,dague, mutableListOf(potionDeSoin2))
-    val gobelin=Personnage("Antoine le gobelin", pointDeVie = 20, pointDeVieMax = 20, attaque = 5, defense = 4, vitesse = 11, endurance = 6, armeEquipee = epee2, inventaire = mutableListOf(potionDeSoin3))
-    val troll= Personnage("Nassim le troll", pointDeVie = 100,100,6,3,12,3,marteau, mutableListOf(potionDeSoin4))
+    val kobold=Personnage("Marvin le Kobold",25,25,3,4,6,12,dague, mutableListOf(potionDeSoin2,dague))
+    val gobelin=Personnage("Antoine le gobelin", pointDeVie = 20, pointDeVieMax = 20, attaque = 5, defense = 4, vitesse = 11, endurance = 6, armeEquipee = epee2, inventaire = mutableListOf(potionDeSoin3,epee2))
+    val troll= Personnage("Nassim le troll", pointDeVie = 100,100,6,3,12,3,marteau, mutableListOf(potionDeSoin4,marteau))
 
     val jeu = Jeu(listOf(kobold,gobelin,troll))
     jeu.creerPersonnage()
-    jeu.joueur?.armeEquipee=lance
+    jeu.joueur?.inventaire?.add(epee1)
     jeu.joueur?.inventaire?.add(potionDeSoin5)
+    jeu.joueur?.equiperArme(epee1)
     jeu.lancerCombat()
 }

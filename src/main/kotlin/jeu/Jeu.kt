@@ -1,11 +1,11 @@
 package jeu
 
 import personnage.Personnage
-import java.time.Period
 
-class Jeu (val monstres: List<Personnage>, var scoreInitial: Int = 0) {
+
+class Jeu (val monstres: List<Personnage>) {
     var joueur: Personnage?=null
-    var score:Int =0;
+    var score:Int =0
 
     fun lancerCombat() {
         for (monstre in monstres) {
@@ -21,7 +21,7 @@ class Jeu (val monstres: List<Personnage>, var scoreInitial: Int = 0) {
 
     private fun calculerScore(tours: Int): Int {
         // Par exemple, vous pouvez attribuer plus de points pour moins de tours
-        return 100 - tours * 10
+        return 500 - tours * 10
     }
 
     /**
@@ -35,7 +35,7 @@ class Jeu (val monstres: List<Personnage>, var scoreInitial: Int = 0) {
         val leNom = readLine() ?: "Inconnu"
         var perso:Personnage
         do {
-            var resteDePoints=40;
+            var resteDePoints=40
             println("Il y a $resteDePoints points.")
             print("Saisir votre score d'attaque :")
             val scoreAttaque = readLine()?.toIntOrNull() ?: 10
@@ -59,7 +59,7 @@ class Jeu (val monstres: List<Personnage>, var scoreInitial: Int = 0) {
             val pvMax= 100+(10*scoreEndurance)
             val pv=pvMax
             // Créer un personnage avec les informations fournies par l'utilisateur
-            perso=Personnage(leNom, 100, 100, scoreAttaque, scoreDefense, scoreEndurance, scoreVitesse)
+            perso=Personnage(leNom, pv, pvMax, scoreAttaque, scoreDefense, scoreEndurance, scoreVitesse)
         }
             while (resteDePoints<0)
             //Valorasation du personnage du joueur
