@@ -19,8 +19,8 @@ var sortDeGuerison = Sort("Sort de Guérison") { cible ->
 }
 
 fun main() {
-    val epee1 = Arme("Épée Longue", "Une épée longue tranchante", 1, 8, TypeArme.EPEE, Rarete.COMMUN)
-    val epee2 = Arme("Épée Courte", "Une épée courte tranchante", 1, 6, TypeArme.EPEE, Rarete.COMMUN)
+
+    val epee = Arme("Épée Courte", "Une épée courte tranchante", 1, 6, TypeArme.EPEE, Rarete.COMMUN)
     val lance = Arme("Lance", "Une lance pointue", 2, 8, TypeArme.LANCE, Rarete.COMMUN)
     val dague = Arme("Dague", "Une dague pointue", 1, 4, TypeArme.DAGUE, Rarete.COMMUN)
     val marteau = Arme("Marteau", "un marteau lourd", 3, 10, TypeArme.MARTEAU, Rarete.COMMUN)
@@ -29,9 +29,9 @@ fun main() {
     val potionDeSoin2 = Potion("Potion de Soin", "Restaure les points de vie", 20)
     val potionDeSoin3 = Potion("Potion de Soin", "Restaure les points de vie", 20)
     val potionDeSoin4 = Potion("Grande Potion de Soin", "Restaure les points de vie", 30)
-    val potionDeSoin5 = Potion("Grande Potion de Soin", "Restaure les points de vie", 30)
 
-    val joueur = Personnage("Joueur", 100, 100, 20, 10, 5, 7, epee1)
+
+    val joueur = Personnage("Joueur", 100, 100, 20, 10, 5, 7, epee)
     joueur.inventaire.add(lance)
     joueur.inventaire.add(potionDeSoin1)
 
@@ -44,8 +44,8 @@ fun main() {
         defense = 4,
         vitesse = 11,
         endurance = 6,
-        armeEquipee = epee2,
-        inventaire = mutableListOf(potionDeSoin3, epee2)
+        armeEquipee = epee,
+        inventaire = mutableListOf(potionDeSoin3, epee)
     )
     val troll = Personnage(
         "Nassim le troll",
@@ -60,9 +60,6 @@ fun main() {
     )
 
     val jeu = Jeu(listOf(kobold, gobelin, troll))
-    jeu.creerPersonnage()
-    jeu.joueur?.inventaire?.add(epee1)
-    jeu.joueur?.inventaire?.add(potionDeSoin5)
-    jeu.joueur?.equiperArme(epee1)
+
     jeu.lancerCombat()
 }

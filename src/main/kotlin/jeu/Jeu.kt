@@ -1,6 +1,7 @@
 package jeu
 
 import item.Arme
+import item.Potion
 import item.Rarete
 import item.TypeArme
 import personnage.Guerrier
@@ -12,12 +13,16 @@ import sortDeGuerison
 
 
 class Jeu(val monstres: List<Personnage>) {
-    var joueur: Personnage? = null
+    lateinit var joueur: Personnage
     var score: Int = 0
+
+    init {
+        this.creerPersonnage()
+    }
 
     fun lancerCombat() {
         for (monstre in monstres) {
-            val combat = Combat(this.joueur!!, monstre)
+            val combat = Combat(this.joueur, monstre)
             combat.executerCombat()
 
             // Mettre à jour le score en fonction du nombre de tours
@@ -47,22 +52,22 @@ class Jeu(val monstres: List<Personnage>) {
             var resteDePoints = 40
             println("Il y a $resteDePoints points.")
             print("Saisir votre score d'attaque :")
-             scoreAttaque = readln().toInt() ?: 0
+             scoreAttaque = readln().toInt()
             resteDePoints -= scoreAttaque
             println("Points restants : ${resteDePoints}")
 
             print("Saisir votre score de défense: ")
-             scoreDefense = readln().toInt() ?: 0
+             scoreDefense = readln().toInt()
             resteDePoints -= scoreDefense
             println("Points restants : ${resteDePoints}")
 
             print("Saisir votre score d'endurance: ")
-             scoreEndurance = readln().toInt() ?: 0
+             scoreEndurance = readln().toInt()
             resteDePoints -= scoreEndurance
             println("Points restants : ${resteDePoints}")
 
             print("Saisir votre score de vitesse: ")
-             scoreVitesse = readln().toInt() ?: 0
+             scoreVitesse = readln().toInt()
             resteDePoints -= scoreVitesse
             println("Points restants : ${resteDePoints}")
              pvMax = 100 + (10 * scoreEndurance)
@@ -70,13 +75,13 @@ class Jeu(val monstres: List<Personnage>) {
         }
         while (resteDePoints < 0)
             // Créer un personnage avec les informations fournies par l'utilisateur
-            var typePerso="";
+            var typePerso=""
             do{
                 println("Quel type de personnage ?")
                 println("1=> Guerrier : peut avoir 2 armes")
                 println("2=> Voleur : peut obtenir des items")
                 println("3=> Mage : lance des sorts")
-                val choixType= readln().toInt();
+                val choixType= readln().toInt()
                when (choixType){
                    1->typePerso="guerrier"
                    2->typePerso="voleur"
@@ -102,6 +107,12 @@ class Jeu(val monstres: List<Personnage>) {
                 }
         //Valorasation du personnage du joueur
         this.joueur = perso
+        val epee = Arme("Épée Longue", "Une épée longue tranchante", 1, 8, TypeArme.EPEE, Rarete.COMMUN)
+        val potionDeSoin = Potion("Grande Potion de Soin", "Restaure les points de vie", 30)
+        joueur.inventaire.add(epee)
+
+        joueur.inventaire.add(potionDeSoin)
+        joueur.armeEquipee=epee
         return perso
     }
     
