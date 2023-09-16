@@ -5,7 +5,7 @@ import item.Item
 import item.Potion
 
 
-class Personnage(
+open class Personnage(
     val nom: String,
     var pointDeVie: Int,
     val pointDeVieMax: Int,
@@ -18,35 +18,27 @@ class Personnage(
 ) {
 
     // Méthode pour attaquer un adversaire
-    fun attaquer(adversaire: Personnage) {
+    open fun attaquer(adversaire: Personnage) {
         // Vérifier si le personnage a une arme équipée
+        var degats = 0
         if (armeEquipee != null) {
             // Calculer les dégâts en utilisant les attributs du personnage et la méthode calculerDegat de l'arme
-            val degats = this.armeEquipee!!.calculerDegats()  + this.attaque
-
-            // Appliquer la défense de l'adversaire
-            val degatsInfliges = maxOf(1, degats - adversaire.defense)
-
-            // Appliquer les dégâts à l'adversaire
-            adversaire.pointDeVie= adversaire.pointDeVie-degatsInfliges
-
-            println("$nom attaque ${adversaire.nom} avec ${armeEquipee?.nom} et inflige $degatsInfliges points de dégâts.")
+             degats = this.armeEquipee!!.calculerDegats() + this.attaque
         } else {
             // Si le personnage n'a pas d'arme équipée, l'attaque est moins efficace
-            val degats = attaque / 2
-
-            // Appliquer la défense de l'adversaire
-            val degatsInfliges = maxOf(1, degats - adversaire.defense)
-
-            // Appliquer les dégâts à l'adversaire
-            adversaire.pointDeVie= adversaire.pointDeVie-degatsInfliges
-
-            println("$nom attaque ${adversaire.nom} avec une attaque de base et inflige $degatsInfliges points de dégâts.")
+            degats = attaque
         }
+        // Appliquer la défense de l'adversaire (au minimum au moins 1 de dégat)
+        val degatsInfliges = maxOf(1, degats - adversaire.defense)
+
+        // Appliquer les dégâts à l'adversaire
+        adversaire.pointDeVie = adversaire.pointDeVie - degatsInfliges
+
+        println("$nom attaque ${adversaire.nom} avec ${armeEquipee?.nom ?: "une attaque de base"} et inflige $degatsInfliges points de dégâts.")
     }
 
     // Méthode pour équiper une arme de l'inventaire
-    fun equiperArme(arme: Arme) {
+    open fun equiperArme(arme: Arme) {
         if (inventaire.contains(arme)) {
             armeEquipee = arme
             println("$nom équipe ${arme.nom}.")
@@ -83,12 +75,12 @@ class Personnage(
     /**
      * Loot l'inventaire de la cible
      */
-    fun loot(cible: Personnage){
-            cible.armeEquipee=null
-            this.inventaire.addAll(cible.inventaire)
-            cible.inventaire.forEach({println("${this.nom} récupère un/une $it")})
-            println()
-            cible.inventaire.clear()
+    fun loot(cible: Personnage) {
+        cible.armeEquipee = null
+        this.inventaire.addAll(cible.inventaire)
+        cible.inventaire.forEach({ println("${this.nom} récupère un/une $it") })
+        println()
+        cible.inventaire.clear()
     }
 
     /**

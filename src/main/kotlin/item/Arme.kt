@@ -3,13 +3,13 @@ package item
 import personnage.Personnage
 
 class Arme(
-     nom: String,
-     description: String,
+    nom: String,
+    description: String,
     val degatMin: Int,
     val degatMax: Int,
     val type: TypeArme,
     val rarete: Rarete
-) : Item(nom,description){
+) : Item(nom, description) {
     // Méthode pour calculer les dégâts de l'arme
     fun calculerDegats(): Int {
         val resultatLancer = (degatMin..degatMax).random()

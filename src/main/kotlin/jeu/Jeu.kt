@@ -3,13 +3,13 @@ package jeu
 import personnage.Personnage
 
 
-class Jeu (val monstres: List<Personnage>) {
-    var joueur: Personnage?=null
-    var score:Int =0
+class Jeu(val monstres: List<Personnage>) {
+    var joueur: Personnage? = null
+    var score: Int = 0
 
     fun lancerCombat() {
         for (monstre in monstres) {
-            val combat = Combat( this.joueur!!, monstre)
+            val combat = Combat(this.joueur!!, monstre)
             combat.executerCombat()
 
             // Mettre à jour le score en fonction du nombre de tours
@@ -33,37 +33,36 @@ class Jeu (val monstres: List<Personnage>) {
 
         print("Nom du personnage: ")
         val leNom = readLine() ?: "Inconnu"
-        var perso:Personnage
+        var perso: Personnage
         do {
-            var resteDePoints=40
+            var resteDePoints = 40
             println("Il y a $resteDePoints points.")
             print("Saisir votre score d'attaque :")
             val scoreAttaque = readLine()?.toIntOrNull() ?: 10
-            resteDePoints-=scoreAttaque
+            resteDePoints -= scoreAttaque
             println("Points restants : ${resteDePoints}")
 
             print("Saisir votre score de défense: ")
             val scoreDefense = readLine()?.toIntOrNull() ?: 10
-            resteDePoints-=scoreDefense
+            resteDePoints -= scoreDefense
             println("Points restants : ${resteDePoints}")
 
             print("Saisir votre score d'endurance: ")
             val scoreEndurance = readLine()?.toIntOrNull() ?: 10
-            resteDePoints-=scoreEndurance
+            resteDePoints -= scoreEndurance
             println("Points restants : ${resteDePoints}")
 
             print("Saisir votre score de vitesse: ")
             val scoreVitesse = readLine()?.toIntOrNull() ?: 10
-            resteDePoints-=scoreVitesse
+            resteDePoints -= scoreVitesse
             println("Points restants : ${resteDePoints}")
-            val pvMax= 100+(10*scoreEndurance)
-            val pv=pvMax
+            val pvMax = 100 + (10 * scoreEndurance)
+            val pv = pvMax
             // Créer un personnage avec les informations fournies par l'utilisateur
-            perso=Personnage(leNom, pv, pvMax, scoreAttaque, scoreDefense, scoreEndurance, scoreVitesse)
-        }
-            while (resteDePoints<0)
-            //Valorasation du personnage du joueur
-            this.joueur=perso
+            perso = Personnage(leNom, pv, pvMax, scoreAttaque, scoreDefense, scoreEndurance, scoreVitesse)
+        } while (resteDePoints < 0)
+        //Valorasation du personnage du joueur
+        this.joueur = perso
         return perso
     }
 }
