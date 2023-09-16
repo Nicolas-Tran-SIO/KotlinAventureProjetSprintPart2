@@ -18,12 +18,25 @@ var sortDeGuerison = Sort("Sort de Guérison") { cible ->
     }
 }
 
+val typeEpeeLongue=  TypeArme("Epee longue",1,8,2)
+val typeEpeeCourte=  TypeArme("Epee courte",1,6,2)
+val typeDague=  TypeArme("Epee courte",1,4,3)
+val typeLance= TypeArme("Lance",1,6,3)
+val typeMarteau= TypeArme("Marteau",1,8,2)
+
+val rareteCommun= Rarete("commun",0,"\u001B[32m")
+val rareteRare = Rarete("rare",1, couleur = "\u001B[34m")
+val rareteEpic = Rarete("epic",2, "\u001B[35m")
+val rareteLegendaire= Rarete("legendaire",3,"\u001B[33m")
+
+
+
 fun main() {
 
-    val epee = Arme("Épée Courte", "Une épée courte tranchante", 1, 6, TypeArme.EPEE, Rarete.COMMUN)
-    val lance = Arme("Lance", "Une lance pointue", 2, 8, TypeArme.LANCE, Rarete.COMMUN)
-    val dague = Arme("Dague", "Une dague pointue", 1, 4, TypeArme.DAGUE, Rarete.COMMUN)
-    val marteau = Arme("Marteau", "un marteau lourd", 3, 10, TypeArme.MARTEAU, Rarete.COMMUN)
+    val epee = Arme("Épée Courte", "Une épée courte tranchante",  typeEpeeCourte, rareteCommun)
+    val lance = Arme("Lance", "Une lance pointue",  typeLance, rareteRare)
+    val dague = Arme("Dague", "Une dague extrêmement pointue",  typeDague, rareteEpic)
+    val marteau = Arme("Marteau", "un marteau legendaire pourfendeur de troll",  typeMarteau, rareteLegendaire)
 
     val potionDeSoin1 = Potion("Potion de Soin", "Restaure les points de vie", 20)
     val potionDeSoin2 = Potion("Potion de Soin", "Restaure les points de vie", 20)

@@ -2,14 +2,15 @@ package jeu
 
 import item.Arme
 import item.Potion
-import item.Rarete
-import item.TypeArme
 import personnage.Guerrier
 import personnage.Mage
 import personnage.Personnage
 import personnage.Voleur
+import rareteCommun
 import sortDeFeu
 import sortDeGuerison
+import typeDague
+import typeEpeeLongue
 
 
 class Jeu(val monstres: List<Personnage>) {
@@ -93,7 +94,7 @@ class Jeu(val monstres: List<Personnage>) {
             when (typePerso){
                 "guerrier"-> {
                     perso = Guerrier(leNom, pv, pvMax, scoreAttaque, scoreDefense, scoreEndurance, scoreVitesse)
-                    val maDague=Arme("Dague", "Une dague pointue", 1, 4, TypeArme.DAGUE, Rarete.COMMUN)
+                    val maDague=Arme("Dague", "Une dague pointue", typeDague,rareteCommun)
                     perso.inventaire.add(maDague)
                     perso.armeSecondaireEquipee=maDague
                 }
@@ -107,7 +108,7 @@ class Jeu(val monstres: List<Personnage>) {
                 }
         //Valorasation du personnage du joueur
         this.joueur = perso
-        val epee = Arme("Épée Longue", "Une épée longue tranchante", 1, 8, TypeArme.EPEE, Rarete.COMMUN)
+        val epee = Arme("Épée Longue", "Une épée longue tranchante",typeEpeeLongue, rareteCommun)
         val potionDeSoin = Potion("Grande Potion de Soin", "Restaure les points de vie", 30)
         joueur.inventaire.add(epee)
 

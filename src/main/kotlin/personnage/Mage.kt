@@ -41,13 +41,14 @@ class Mage(
 
         if (choixSort != null && choixSort >= 0 && choixSort < grimoire.size) {
             val sortChoisi = grimoire[choixSort]
-            var choix :Int;
+            var choix :Int
             do {
                 println("Choisir la cible :")
                 println("0=> ${this.nom}")
                 println("1=>${cible.nom}")
-                choix = readln().toInt();
+                choix = readln().toInt()
             }while (choix != 0 && choix !=1)
+            println("\u001B[34m")
             if(choix==0){
                 // Appel de la fonction effet du sort sur le joueur
                 sortChoisi.effet(this)

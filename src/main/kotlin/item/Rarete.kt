@@ -1,5 +1,5 @@
 package item
 
-enum class Rarete {
-    COMMUN, RARE, EPIC, LEGENDAIRE
+class Rarete (val nom:String,val bonusRarete: Int,val couleur:String) {
+
 }

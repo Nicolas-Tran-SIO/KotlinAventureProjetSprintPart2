@@ -5,18 +5,17 @@ import personnage.Personnage
 class Arme(
     nom: String,
     description: String,
-    val degatMin: Int,
-    val degatMax: Int,
     val type: TypeArme,
     val rarete: Rarete
 ) : Item(nom, description) {
     // Méthode pour calculer les dégâts de l'arme
     fun calculerDegats(): Int {
-        val resultatLancer = (degatMin..degatMax).random()
-        if (resultatLancer == degatMax) {
+        // Exemple : 1d6 +2 ( cad un nombre entre 1 et 6 plus le modificateur 2)
+        val resultatLancer = (type.degatMin..type.degatMax).random() + rarete.bonusRarete
+        if (resultatLancer == type.degatMax) {
             // Coup critique (si le nombre tiré correspond au maximum)
             println("Coup critique !")
-            return resultatLancer * 2
+            return resultatLancer * type.multiplicateurCritique
         } else {
             return resultatLancer
         }
@@ -27,6 +26,7 @@ class Arme(
     }
 
     override fun toString(): String {
-        return "$nom (Dégâts Min: $degatMin, Dégâts Max: $degatMax, Type: $type, Rareté: $rarete)"
+        return "${rarete.couleur} ${type.nom} ${rarete.nom}  Dégâts :${type.degatMin}d${type.degatMax} +${rarete.bonusRarete}  \u001B[0m"
+
     }
 }

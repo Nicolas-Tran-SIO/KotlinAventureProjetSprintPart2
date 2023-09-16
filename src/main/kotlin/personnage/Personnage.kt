@@ -92,7 +92,7 @@ open class Personnage(
             println("L'inventaire est vide.")
         } else {
             for ((index, item) in inventaire.withIndex()) {
-                println("$index => ${item.nom}: ${item.description}")
+                println("$index => ${item} ")
             }
         }
     }

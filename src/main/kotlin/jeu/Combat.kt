@@ -23,15 +23,18 @@ class Combat(
         println("6. Voler un objet (Voleur uniquement)") // Option pour le Voleur
         print("Choisissez une action (1, 2, 3, 4, 5, 6): ")
         val choix = readLine()?.toIntOrNull() ?: 0
-        println("\u001B[34m")
+
         when (choix) {
             1 -> {
+                println("\u001B[34m")
                 joueur.attaquer(monstre)
             }
             2 -> {
+                println("\u001B[34m")
                 joueur.boirePotion()
             }
             3 -> {
+                println("\u001B[34m")
                 println("${joueur.nom} choisit de passer.")
             }
             4 -> {
@@ -42,6 +45,7 @@ class Combat(
                 val choixObjet = readln().toInt()
                 if (choixObjet >= 0 && choixObjet < joueur.inventaire.size) {
                     val objetChoisi = joueur.inventaire[choixObjet]
+                    println("\u001B[34m")
                     objetChoisi.utiliser(joueur)
                 } else {
                     println("Choix invalide.")
@@ -49,6 +53,7 @@ class Combat(
             }
             5 -> {
                 if (joueur is Mage) {
+
                     // Le joueur est un Mage, permettez-lui de choisir et de lancer un sort depuis son grimoire
                     joueur.choisirEtLancerSort(monstre)
                 } else {
@@ -57,6 +62,7 @@ class Combat(
             }
             6 -> {
                 if (joueur is Voleur) {
+                    println("\u001B[34m")
                     // Le joueur est un Voleur, permettez-lui de voler un objet à la cible (monstre) actuelle
                     joueur.volerItem(monstre)
                 } else {
