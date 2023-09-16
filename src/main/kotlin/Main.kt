@@ -3,27 +3,27 @@ import jeu.Jeu
 import jeu.Sort
 import personnage.Personnage
 
+val sortDeFeu = Sort("Boule de Feu") { cible ->
+    run {
+        val degat = (7..15).random()
+        cible.pointDeVie -= degat
+        println("Boule de Feu inflige $degat à ${cible.nom}")
+    }
+}
+var sortDeGuerison = Sort("Sort de Guérison") { cible ->
+    run {
+        val soin = (10..25).random()
+        cible.pointDeVie += soin
+        println("Le sort de guérison soigne ${soin} PV à ${cible.nom}")
+    }
+}
+
 fun main() {
     val epee1 = Arme("Épée Longue", "Une épée longue tranchante", 1, 8, TypeArme.EPEE, Rarete.COMMUN)
     val epee2 = Arme("Épée Courte", "Une épée courte tranchante", 1, 6, TypeArme.EPEE, Rarete.COMMUN)
     val lance = Arme("Lance", "Une lance pointue", 2, 8, TypeArme.LANCE, Rarete.COMMUN)
     val dague = Arme("Dague", "Une dague pointue", 1, 4, TypeArme.DAGUE, Rarete.COMMUN)
     val marteau = Arme("Marteau", "un marteau lourd", 3, 10, TypeArme.MARTEAU, Rarete.COMMUN)
-
-    val sortDeFeu = Sort("Boule de Feu") { cible ->
-        run {
-            val degat = (7..15).random()
-            cible.pointDeVie -= degat
-            println("Boule de Feu inflige $degat à ${cible.nom}")
-        }
-    }
-    var sortDeGuerison = Sort("Sort de Guérison") { cible ->
-        run {
-            val soin = (10..25).random()
-            cible.pointDeVie += soin
-            println("Le sort de guérison soigne ${soin} PV à ${cible.nom}")
-        }
-    }
 
     val potionDeSoin1 = Potion("Potion de Soin", "Restaure les points de vie", 20)
     val potionDeSoin2 = Potion("Potion de Soin", "Restaure les points de vie", 20)

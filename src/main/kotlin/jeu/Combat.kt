@@ -1,7 +1,9 @@
 package jeu
 
 
+import personnage.Mage
 import personnage.Personnage
+import personnage.Voleur
 
 
 class Combat(
@@ -17,7 +19,9 @@ class Combat(
         println("2. Boire une potion")
         println("3. Passer")
         println("4. Afficher inventaire")
-        print("Choisissez une action (1, 2, 3, 4): ")
+        println("5. Lancer un sort (Mage uniquement)") // Option pour le Mage
+        println("6. Voler un objet (Voleur uniquement)") // Option pour le Voleur
+        print("Choisissez une action (1, 2, 3, 4, 5, 6): ")
         val choix = readLine()?.toIntOrNull() ?: 0
         println("\u001B[34m")
         when (choix) {
@@ -43,9 +47,26 @@ class Combat(
                     println("Choix invalide.")
                 }
             }
-            else -> {
-                println("Action invalide. Choisissez 1 pour attaquer, 2 pour boire une potion ou 3 pour passer.")
+            5 -> {
+                if (joueur is Mage) {
+                    // Le joueur est un Mage, permettez-lui de choisir et de lancer un sort depuis son grimoire
+                    joueur.choisirEtLancerSort(monstre)
+                } else {
+                    println("${joueur.nom} n'est pas un Mage et ne peut pas lancer de sort.")
+                }
             }
+            6 -> {
+                if (joueur is Voleur) {
+                    // Le joueur est un Voleur, permettez-lui de voler un objet à la cible (monstre) actuelle
+                    joueur.volerItem(monstre)
+                } else {
+                    println("${joueur.nom} n'est pas un Voleur et ne peut pas voler d'objet.")
+                }
+            }
+            else -> {
+                println("Action invalide. Choisissez 1 pour attaquer, 2 pour boire une potion, 3 pour passer, 4 pour afficher l'inventaire, 5 pour lancer un sort (Mage uniquement) ou 6 pour voler un objet (Voleur uniquement).")
+            }
+
         }
         println("\u001b[0m")
     }

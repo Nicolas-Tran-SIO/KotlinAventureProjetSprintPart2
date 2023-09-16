@@ -36,7 +36,7 @@ class Guerrier(
         // Appliquer les dégâts à l'adversaire
         adversaire.pointDeVie -= degatsInfliges
 
-        println("$nom attaque ${adversaire.nom} avec ${armeEquipee?.nom ?: "une attaque de base"} et inflige $degatsInfliges points de dégâts.")
+        println("$nom attaque ${adversaire.nom} avec ${armeEquipee?.nom ?: "une attaque de base"} et ${armeSecondaireEquipee?.nom ?: "une attaque de base"}  inflige $degatsInfliges points de dégâts.")
     }
 
     /**
