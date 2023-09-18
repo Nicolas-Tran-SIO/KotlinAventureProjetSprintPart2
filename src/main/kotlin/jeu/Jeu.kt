@@ -13,21 +13,26 @@ import typeDague
 import typeEpeeLongue
 
 
-class Jeu(val monstres: List<Personnage>) {
+class Jeu(monstres: List<Personnage>) {
     lateinit var joueur: Personnage
+     var combats: MutableList<Combat> = mutableListOf()
     var score: Int = 0
 
     init {
         this.creerPersonnage()
+        for (unMonstre in monstres){
+            val unCombat= Combat(joueur,unMonstre)
+            combats.add(unCombat);
+        }
     }
 
     fun lancerCombat() {
-        for (monstre in monstres) {
-            val combat = Combat(this.joueur, monstre)
-            combat.executerCombat()
+        for (unCombat in this.combats) {
+
+            unCombat.executerCombat()
 
             // Mettre à jour le score en fonction du nombre de tours
-            val tours = combat.nombreTours
+            val tours = unCombat.nombreTours
             score += calculerScore(tours)
         }
         println("Score final du joueur: $score")
