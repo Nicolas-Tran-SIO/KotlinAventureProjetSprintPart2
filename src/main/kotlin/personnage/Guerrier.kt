@@ -58,7 +58,7 @@ class Guerrier(
     }
 
     // Surcharge de la méthode equiperArme
-    override fun equiperArme(arme: Arme) {
+    override fun equipe(arme: Arme) {
         this.afficherArmes()
         print("À quelle emplacement voulez-vous équiper l'arme (1 ou 2) : ")
         val choixEmplacement = readLine()?.toIntOrNull()

@@ -1,6 +1,7 @@
 package personnage
 
 import item.Arme
+import item.Armure
 import item.Item
 import item.Potion
 
@@ -14,22 +15,29 @@ open class Personnage(
     var endurance: Int,
     var vitesse: Int,
     var armeEquipee: Arme? = null,
+    var armureEquipee: Armure?=null,
     val inventaire: MutableList<Item> = mutableListOf()
 ) {
+
+    fun calculeDefense():Int{
+        var resultat=this.defense/2;
+        var scoreArmure=(this.armureEquipee?.typeArmure?.bonusType ?: 0) + (this.armureEquipee?.qualite?.bonusRarete ?: 0)
+        resultat+=scoreArmure;
+        return resultat;
+
+    }
 
     // Méthode pour attaquer un adversaire
     open fun attaquer(adversaire: Personnage) {
         // Vérifier si le personnage a une arme équipée
-        var degats = 0
+        var degats = this.attaque/2
         if (armeEquipee != null) {
             // Calculer les dégâts en utilisant les attributs du personnage et la méthode calculerDegat de l'arme
-             degats = this.armeEquipee!!.calculerDegats() + this.attaque
-        } else {
-            // Si le personnage n'a pas d'arme équipée, l'attaque est moins efficace
-            degats = attaque
+             degats += this.armeEquipee!!.calculerDegats()
         }
         // Appliquer la défense de l'adversaire (au minimum au moins 1 de dégat)
-        val degatsInfliges = maxOf(1, degats - adversaire.defense)
+        val degatsInfliges = maxOf(1, degats - adversaire.calculeDefense())
+
 
         // Appliquer les dégâts à l'adversaire
         adversaire.pointDeVie = adversaire.pointDeVie - degatsInfliges
@@ -38,12 +46,21 @@ open class Personnage(
     }
 
     // Méthode pour équiper une arme de l'inventaire
-    open fun equiperArme(arme: Arme) {
+    open fun equipe(arme: Arme) {
         if (inventaire.contains(arme)) {
             armeEquipee = arme
             println("$nom équipe ${arme.nom}.")
         } else {
             println("$nom n'a pas cette arme dans son inventaire.")
+        }
+    }
+
+    fun equipe(armure: Armure){
+        if(inventaire.contains(armure)){
+            this.armureEquipee=armure
+        }
+        else{
+            println("$nom n'a pas cette armure dans son inventaire.")
         }
     }
 

@@ -22,7 +22,7 @@ class Arme(
     }
 
     override fun utiliser(cible: Personnage) {
-        cible.equiperArme(this)
+        cible.equipe(this)
     }
 
     override fun toString(): String {
