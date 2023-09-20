@@ -24,19 +24,21 @@ val typeDague=  TypeArme("Epee courte",1,4,3)
 val typeLance= TypeArme("Lance",1,6,3)
 val typeMarteau= TypeArme("Marteau",1,8,2)
 
-val rareteCommun= Rarete("commun",0,"\u001B[32m")
-val rareteRare = Rarete("rare",1, couleur = "\u001B[34m")
-val rareteEpic = Rarete("epic",2, "\u001B[35m")
-val rareteLegendaire= Rarete("legendaire",3,"\u001B[33m")
+val typeArmureCuir= TypeArmure("Armure en cuir",1)
+
+val qualiteCommun= Qualite("commun",0,"\u001B[32m")
+val qualiteRare = Qualite("rare",1, couleur = "\u001B[34m")
+val qualiteEpic = Qualite("epic",2, "\u001B[35m")
+val qualiteLegendaire= Qualite("legendaire",3,"\u001B[33m")
 
 
 
 fun main() {
 
-    val epee = Arme("Épée Courte", "Une épée courte tranchante",  typeEpeeCourte, rareteCommun)
-    val lance = Arme("Lance", "Une lance pointue",  typeLance, rareteRare)
-    val dague = Arme("Dague", "Une dague extrêmement pointue",  typeDague, rareteEpic)
-    val marteau = Arme("Marteau", "un marteau legendaire pourfendeur de troll",  typeMarteau, rareteLegendaire)
+    val epee = Arme("Épée Courte", "Une épée courte tranchante",  typeEpeeCourte, qualiteCommun)
+    val lance = Arme("Lance", "Une lance pointue",  typeLance, qualiteRare)
+    val dague = Arme("Dague", "Une dague extrêmement pointue",  typeDague, qualiteEpic)
+    val marteau = Arme("Marteau", "un marteau legendaire pourfendeur de troll",  typeMarteau, qualiteLegendaire)
 
     val potionDeSoin1 = Potion("Potion de Soin", "Restaure les points de vie", 20)
     val potionDeSoin2 = Potion("Potion de Soin", "Restaure les points de vie", 20)
@@ -48,7 +50,7 @@ fun main() {
     joueur.inventaire.add(lance)
     joueur.inventaire.add(potionDeSoin1)
 
-    val kobold = Personnage("Marvin le Kobold", 25, 25, 3, 4, 6, 12, dague, mutableListOf(potionDeSoin2, dague))
+    val kobold = Personnage("Marvin le Kobold", 25, 25, 3, 4, 6, 12, dague, inventaire= mutableListOf(potionDeSoin2, dague))
     val gobelin = Personnage(
         "Antoine le gobelin",
         pointDeVie = 20,
@@ -69,10 +71,11 @@ fun main() {
         12,
         3,
         marteau,
-        mutableListOf(potionDeSoin4, marteau)
+        inventaire =mutableListOf(potionDeSoin4, marteau)
     )
 
     val jeu = Jeu(listOf(kobold, gobelin, troll))
 
     jeu.lancerCombat()
+    
 }

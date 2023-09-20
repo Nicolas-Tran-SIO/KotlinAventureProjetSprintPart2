@@ -6,12 +6,12 @@ class Arme(
     nom: String,
     description: String,
     val type: TypeArme,
-    val rarete: Rarete
+    val qualite: Qualite
 ) : Item(nom, description) {
     // Méthode pour calculer les dégâts de l'arme
     fun calculerDegats(): Int {
         // Exemple : 1d6 +2 ( cad un nombre entre 1 et 6 plus le modificateur 2)
-        val resultatLancer = (type.degatMin..type.degatMax).random() + rarete.bonusRarete
+        val resultatLancer = (type.degatMin..type.degatMax).random() + qualite.bonusRarete
         if (resultatLancer == type.degatMax) {
             // Coup critique (si le nombre tiré correspond au maximum)
             println("Coup critique !")
@@ -26,7 +26,7 @@ class Arme(
     }
 
     override fun toString(): String {
-        return "${rarete.couleur} ${type.nom} ${rarete.nom}  Dégâts :${type.degatMin}d${type.degatMax} +${rarete.bonusRarete}  \u001B[0m"
+        return "${qualite.couleur} ${type.nom} ${qualite.nom}  Dégâts :${type.degatMin}d${type.degatMax} +${qualite.bonusRarete}  \u001B[0m"
 
     }
 }

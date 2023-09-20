@@ -6,7 +6,7 @@ import personnage.Guerrier
 import personnage.Mage
 import personnage.Personnage
 import personnage.Voleur
-import rareteCommun
+import qualiteCommun
 import sortDeFeu
 import sortDeGuerison
 import typeDague
@@ -99,7 +99,7 @@ class Jeu(monstres: List<Personnage>) {
             when (typePerso){
                 "guerrier"-> {
                     perso = Guerrier(leNom, pv, pvMax, scoreAttaque, scoreDefense, scoreEndurance, scoreVitesse)
-                    val maDague=Arme("Dague", "Une dague pointue", typeDague,rareteCommun)
+                    val maDague=Arme("Dague", "Une dague pointue", typeDague,qualiteCommun)
                     perso.inventaire.add(maDague)
                     perso.armeSecondaireEquipee=maDague
                 }
@@ -113,7 +113,7 @@ class Jeu(monstres: List<Personnage>) {
                 }
         //Valorasation du personnage du joueur
         this.joueur = perso
-        val epee = Arme("Épée Longue", "Une épée longue tranchante",typeEpeeLongue, rareteCommun)
+        val epee = Arme("Épée Longue", "Une épée longue tranchante",typeEpeeLongue, qualiteCommun)
         val potionDeSoin = Potion("Grande Potion de Soin", "Restaure les points de vie", 30)
         joueur.inventaire.add(epee)
 

@@ -94,6 +94,7 @@ open class Personnage(
      */
     fun loot(cible: Personnage) {
         cible.armeEquipee = null
+        cible.armureEquipee =null
         this.inventaire.addAll(cible.inventaire)
         cible.inventaire.forEach({ println("${this.nom} récupère un/une $it") })
         println()
