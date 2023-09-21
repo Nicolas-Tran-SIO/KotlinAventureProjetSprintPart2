@@ -5,7 +5,8 @@ import personnage.Personnage
 
 val sortDeFeu = Sort("Boule de Feu") { cible ->
     run {
-        val degat = (7..15).random()
+        var degat = (7..15).random()
+        degat = maxOf(1,degat-cible.calculeDefense())
         cible.pointDeVie -= degat
         println("Boule de Feu inflige $degat à ${cible.nom}")
     }
