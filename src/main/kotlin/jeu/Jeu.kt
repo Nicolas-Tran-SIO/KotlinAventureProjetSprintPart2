@@ -9,6 +9,7 @@ import personnage.Voleur
 import qualiteCommun
 import sortDeFeu
 import sortDeGuerison
+import sortProjectileMagique
 import typeDague
 import typeEpeeLongue
 
@@ -22,7 +23,7 @@ class Jeu(monstres: List<Personnage>) {
         this.creerPersonnage()
         for (unMonstre in monstres){
             val unCombat= Combat(joueur,unMonstre)
-            combats.add(unCombat);
+            combats.add(unCombat)
         }
     }
 
@@ -108,6 +109,7 @@ class Jeu(monstres: List<Personnage>) {
                     perso = Mage(leNom, pv, pvMax, scoreAttaque, scoreDefense, scoreEndurance, scoreVitesse)
                     perso.grimoire.add(sortDeFeu)
                     perso.grimoire.add(sortDeGuerison)
+                    perso.grimoire.add(sortProjectileMagique)
                 }
                 else-> perso = Personnage(leNom, pv, pvMax, scoreAttaque, scoreDefense, scoreEndurance, scoreVitesse)
                 }
