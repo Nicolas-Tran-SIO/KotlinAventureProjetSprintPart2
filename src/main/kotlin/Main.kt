@@ -15,7 +15,7 @@ val sortDeFeu = Sort("Boule de Feu") { caster, cible ->
         println("Le sort de boule de feu inflige $degat à ${cible.nom}")
     }
 }
-var sortDeGuerison = Sort("Sort de Guérison") { caster, cible ->
+val sortDeGuerison = Sort("Sort de Guérison") { caster, cible ->
     run {
         val tirageDes = TirageDes(1, 10)
         // on ajoute un bonus au soin qui corespond au bonus d'attaque/2
@@ -24,7 +24,7 @@ var sortDeGuerison = Sort("Sort de Guérison") { caster, cible ->
         println("Le sort de guérison soigne ${soin} PV à ${cible.nom}")
     }
 }
-var sortProjectileMagique = Sort("Sort de projectile magique", { caster, cible ->
+val sortProjectileMagique = Sort("Sort de projectile magique", { caster, cible ->
     run {
         val tirageDes = TirageDes(1, 6)
         //On lance plusieurs fois projectile magique cela depend du score d'attaque
@@ -38,11 +38,11 @@ var sortProjectileMagique = Sort("Sort de projectile magique", { caster, cible -
 })
 
 //instanciation des types d'armes
-val typeEpeeLongue = TypeArme("Epee longue", 1, 8, 2)
-val typeEpeeCourte = TypeArme("Epee courte", 1, 6, 2)
-val typeDague = TypeArme("Epee courte", 1, 4, 3)
-val typeLance = TypeArme("Lance", 1, 6, 3)
-val typeMarteau = TypeArme("Marteau", 1, 8, 2)
+val typeEpeeLongue = TypeArme("Epee longue", 1, 8, 2,20)
+val typeEpeeCourte = TypeArme("Epee courte", 1, 6, 2,18)
+val typeDague = TypeArme("Epee courte", 1, 4, 3,15)
+val typeLance = TypeArme("Lance", 1, 6, 3,18)
+val typeMarteau = TypeArme("Marteau", 1, 8, 2,20)
 
 //instanciation des types d'armures
 val typeArmureCuir = TypeArmure("Armure en cuir", 1)

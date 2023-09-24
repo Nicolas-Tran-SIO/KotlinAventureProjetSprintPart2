@@ -21,7 +21,8 @@ class Arme(
         val deDegat= TirageDes(type.nombreDes,type.valeurDeMax)
         // on lance les dés
         var resultatLancer = deDegat.lance()
-        if (resultatLancer == type.valeurDeMax) {
+        val deCritique = TirageDes(1,20).lance()
+        if (deCritique >= type.activationCritique ) {
             // Coup critique (si le nombre tiré correspond au maximum)
             println("Coup critique !")
            resultatLancer= resultatLancer * type.multiplicateurCritique
