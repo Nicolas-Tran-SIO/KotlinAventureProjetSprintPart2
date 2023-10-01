@@ -23,57 +23,64 @@ class Combat(
         println("6. Voler un objet (Voleur uniquement)") // Option pour le Voleur
         print("Choisissez une action (1, 2, 3, 4, 5, 6): ")
         val choix = readLine()?.toIntOrNull() ?: 0
-
-        when (choix) {
-            1 -> {
-                println("\u001B[34m")
-                joueur.attaquer(monstre)
-            }
-            2 -> {
-                println("\u001B[34m")
-                joueur.boirePotion()
-            }
-            3 -> {
-                println("\u001B[34m")
-                println("${joueur.nom} choisit de passer.")
-            }
-            4 -> {
-                // Afficher l'inventaire
-                joueur.afficherInventaire()
-                // Demander au joueur de choisir un objet à utiliser
-                print("Choisissez un objet à utiliser (entrez le numéro) : ")
-                val choixObjet = readln().toInt()
-                if (choixObjet >= 0 && choixObjet < joueur.inventaire.size) {
-                    val objetChoisi = joueur.inventaire[choixObjet]
-                    println("\u001B[34m")
-                    objetChoisi.utiliser(joueur)
-                } else {
-                    println("Choix invalide.")
+        println("\u001B[34m")
+        try {
+            when (choix) {
+                1 -> {
+                    joueur.attaquer(monstre)
                 }
-            }
-            5 -> {
-                if (joueur is Mage) {
-
-                    // Le joueur est un Mage, permettez-lui de choisir et de lancer un sort depuis son grimoire
-                    joueur.choisirEtLancerSort(monstre)
-                } else {
-                    println("${joueur.nom} n'est pas un Mage et ne peut pas lancer de sort.")
+                2 -> {
+                    if(joueur.aUnePotion()==false){
+                        throw ActionImpossibleException("Action invalide : Pas de potion dans l'inventaire")
+                    }
+                    else{
+                        joueur.boirePotion()
+                    }
                 }
-            }
-            6 -> {
-                if (joueur is Voleur) {
-                    println("\u001B[34m")
-                    // Le joueur est un Voleur, permettez-lui de voler un objet à la cible (monstre) actuelle
-                    joueur.volerItem(monstre)
-                } else {
-                    println("${joueur.nom} n'est pas un Voleur et ne peut pas voler d'objet.")
-                }
-            }
-            else -> {
-                println("Action invalide. Choisissez 1 pour attaquer, 2 pour boire une potion, 3 pour passer, 4 pour afficher l'inventaire, 5 pour lancer un sort (Mage uniquement) ou 6 pour voler un objet (Voleur uniquement).")
-            }
+                3 -> {
 
+                    println("${joueur.nom} choisit de passer.")
+                }
+                4 -> {
+                    // Afficher l'inventaire
+                    joueur.afficherInventaire()
+                    // Demander au joueur de choisir un objet à utiliser
+                    print("Choisissez un objet à utiliser (entrez le numéro) : ")
+                    val choixObjet = readln().toInt()
+                    if (choixObjet >= 0 && choixObjet < joueur.inventaire.size) {
+                        val objetChoisi = joueur.inventaire[choixObjet]
+                        println("\u001B[34m")
+                        objetChoisi.utiliser(joueur)
+                    } else {
+                        println("Choix invalide.")
+                    }
+                }
+                5 -> {
+                    if (joueur is Mage) {
+
+                        // Le joueur est un Mage, permettez-lui de choisir et de lancer un sort depuis son grimoire
+                        joueur.choisirEtLancerSort(monstre)
+                    } else {
+                        println("${joueur.nom} n'est pas un Mage et ne peut pas lancer de sort.")
+                    }
+                }
+                6 -> {
+                    if (joueur is Voleur) {
+                        // Le joueur est un Voleur, permettez-lui de voler un objet à la cible (monstre) actuelle
+                        joueur.volerItem(monstre)
+                    } else {
+                        println("${joueur.nom} n'est pas un Voleur et ne peut pas voler d'objet.")
+                    }
+                }
+                else -> {
+                    println("Action invalide. Choisissez 1 pour attaquer, 2 pour boire une potion, 3 pour passer, 4 pour afficher l'inventaire, 5 pour lancer un sort (Mage uniquement) ou 6 pour voler un objet (Voleur uniquement).")
+                }
+
+            }
+        }catch (erreur: ActionImpossibleException){
+            println("${erreur.message}")
         }
+
         println("\u001b[0m")
     }
 

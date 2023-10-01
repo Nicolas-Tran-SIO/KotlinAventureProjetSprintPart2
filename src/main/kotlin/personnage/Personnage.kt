@@ -49,7 +49,7 @@ open class Personnage(
     open fun equipe(arme: Arme) {
         if (inventaire.contains(arme)) {
             armeEquipee = arme
-            println("$nom équipe ${arme.nom}.")
+            println("${this.nom} équipe ${this.armeEquipee!!.nom}.")
         } else {
             println("$nom n'a pas cette arme dans son inventaire.")
         }

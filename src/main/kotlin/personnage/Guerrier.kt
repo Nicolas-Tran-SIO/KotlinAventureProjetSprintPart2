@@ -14,29 +14,26 @@ class Guerrier(
     var armeSecondaireEquipee: Arme? = null
 
     override fun attaquer(adversaire: Personnage) {
-        val degats: Int
+        var degats: Int = 1
+        var bonusAtq=this.attaque/2
+        var cibleDef=adversaire.calculeDefense()
+        if (armeEquipee != null  ) {
+            super.attaquer(adversaire)
 
-        if (armeEquipee != null && armeSecondaireEquipee != null) {
-            // Si le guerrier a deux armes équipées, calculez les dégâts en utilisant les attributs du personnage et les deux armes
-            val degatsArme1 = this.armeEquipee!!.calculerDegats() + this.attaque
+        }
+        if (armeSecondaireEquipee != null) {
             val degatsArme2 =
-                this.armeSecondaireEquipee!!.calculerDegats() //Pas de bonus d'attaque pour la deuxième arme
-            degats = maxOf(1, degatsArme1 + degatsArme2)
-        } else if (armeEquipee != null) {
-            // Si le guerrier a seulement une arme équipée, calculez les dégâts en utilisant l'arme équipée et les attributs du personnage
-            degats = (this.armeSecondaireEquipee?.calculerDegats() ?: 0) + this.attaque
-        } else {
-            // Si le guerrier n'a pas d'arme équipée, l'attaque est moins efficace
-            degats = attaque
+                this.armeSecondaireEquipee!!.calculerDegats()-cibleDef + bonusAtq
+            degats += maxOf(1, degatsArme2)
+        }
+        else{
+            degats+=maxOf(bonusAtq-cibleDef,1)
         }
 
-        // Appliquer la défense de l'adversaire (au minimum au moins 1 de dégat)
-        val degatsInfliges = maxOf(1, degats - adversaire.defense)
-
         // Appliquer les dégâts à l'adversaire
-        adversaire.pointDeVie -= degatsInfliges
+        adversaire.pointDeVie -= degats
 
-        println("$nom attaque ${adversaire.nom} avec ${armeEquipee?.nom ?: "une attaque de base"} et ${armeSecondaireEquipee?.nom ?: "une attaque de base"}  inflige $degatsInfliges points de dégâts.")
+        println("$nom attaque ${adversaire.nom} avec ${armeEquipee?.nom ?: "une attaque de base"} et ${armeSecondaireEquipee?.nom ?: "une attaque de base"}  inflige $degats points de dégâts.")
     }
 
     /**
@@ -77,4 +74,9 @@ class Guerrier(
             }
         }
     }
+
+    override fun toString(): String {
+        return "Guerrier ${super.toString()} (armeSecondaireEquipee=$armeSecondaireEquipee)"
+    }
+
 }

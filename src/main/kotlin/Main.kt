@@ -37,8 +37,20 @@ val sortProjectileMagique = Sort("Sort de projectile magique", { caster, cible -
     }
 })
 
+val projectionAcide = Sort("Sort de projection acide", { caster, cible ->
+    run {
+        val tirageDes = TirageDes(1, 10)
+            var degat = tirageDes.lance()
+            degat = maxOf(1, degat - cible.calculeDefense())
+            cible.pointDeVie -= degat
+            println("Le jet d'acide inflige $degat à ${cible.nom}")
+
+    }
+})
+
 //instanciation des types d'armes
 val typeEpeeLongue = TypeArme("Epee longue", 1, 8, 2,20)
+
 val typeEpeeCourte = TypeArme("Epee courte", 1, 6, 2,18)
 val typeDague = TypeArme("Epee courte", 1, 4, 3,15)
 val typeLance = TypeArme("Lance", 1, 6, 3,18)

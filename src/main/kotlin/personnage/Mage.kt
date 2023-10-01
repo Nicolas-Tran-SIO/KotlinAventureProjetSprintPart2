@@ -51,12 +51,12 @@ class Mage(
             println("\u001B[34m")
             if(choix==0){
                 // Appel de la fonction effet du sort sur le joueur
-                sortChoisi.effet(this)
+                sortChoisi.effet(this,this)
                 println("$nom lance le sort ${sortChoisi.nom} sur ${this.nom}.")
             }
             else{
                 // Appel de la fonction effet du sort sur la cible
-                sortChoisi.effet(cible)
+                sortChoisi.effet(this,cible)
                 println("$nom lance le sort ${sortChoisi.nom} sur ${cible.nom}.")
             }
 
