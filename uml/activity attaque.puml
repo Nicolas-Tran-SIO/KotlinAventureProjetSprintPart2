@@ -26,29 +26,26 @@ skinparam method {
 title Attaquer
 
 start
-
+:Appeler méthode attaquer du parent (Personnage);
 :Initialisation des dégâts à 1;
 :Initialisation du bonus d'attaque (score d'attaque/2);
 :Calcul de la défense de la cible (utilisation de la méthode totaDefense());
-if (Arme équipée) then (oui)
-    :Appeler méthode attaquer du parent (Personnage);
-else (non)
-    :Ne rien faire;
-endif
+
+
 
 if (Arme secondaire équipée) then (oui)
     :Calcul des dégâts de l'arme secondaire;
     :Calcul des dégâts totaux
     ( degat de l'arme + bonus d'attaque - défense totale de la cible);
-    if (Dégâts totaux > 1) then (oui)
+
+else (non)
+    :Calcul des dégâts totaux (bonus d'attaque - défense totale de la cible);
+endif
+   if (Dégâts totaux > 1) then (oui)
 
     else (non)
         :Initialisation des dégâts à 1;
     endif
-else (non)
-    :Calcul des dégâts totaux (bonus d'attaque - défense totale de la cible);
-endif
-
 :Appliquer les dégâts à l'adversaire;
 :Afficher le message des dégâts infligés;
 

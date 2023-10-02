@@ -1,0 +1,13 @@
+@startuml
+
+(*) --> "Création de l'objet\nTirageDes 1d6"
+"Création de l'objet\nTirageDes 1d6" --> "Boucle de lancement (attaque du caster/2) fois \n "
+"Boucle de lancement (attaque du caster/2) fois \n " --> "Lancer les dés\n(Appel de la méthode lance())"
+"Lancer les dés\n(Appel de la méthode lance())" --> "Calculer les dégâts"
+"Calculer les dégâts" --> "Réduction des points de vie de la cible"
+"Réduction des points de vie de la cible" --> "Affichage du message"
+"Affichage du message" --> "Vérifier fin de boucle"
+"Vérifier fin de boucle" --> "Boucle de lancement (attaque du caster/2) fois \n "
+"Vérifier fin de boucle" --> (*)
+
+@enduml
