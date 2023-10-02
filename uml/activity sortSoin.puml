@@ -22,17 +22,15 @@ skinparam method {
     FontSize MethodFontSize
 }
 
+
 start
 :Création de l'objet\nTirageDes 1d6;
-:Compteur =0;
-if (compteur< (attaque du caster/2)) then (true)
-    :Lancer les dés\n(Appel de la méthode lance());
-    :Calculer les dégâts;
-    :Réduction des points de vie de la cible;
-    : Affichage du message "Le projectile magique inflige x dégats";
-    : Incrémentation du compteur;
-    else(false)
+:Lancer les dés\n(Appel de la méthode lance());
+:Ajout du score d'attaque du caster/2;
+:Application des soins a la cible;
+if( Pv de la cible > pvMax de la cible) then (true)
+    : La cible a ses points vie egaux a ses pvMax;
+else  (false)
 endif
 end
-
 @enduml

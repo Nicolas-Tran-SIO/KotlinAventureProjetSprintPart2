@@ -1,0 +1,44 @@
+@startuml
+!define ClassBackgroundColor #White
+!define MethodBackgroundColor ClassBackgroundColor
+!define ClassBorderColor #000000
+!define ClassFontColor #000000
+!define ClassFontSize 14
+!define MethodFontColor ClassFontColor
+!define MethodFontSize 12
+!define ArrowColor #707070
+
+skinparam class {
+    BackgroundColor ClassBackgroundColor
+    BorderColor ClassBorderColor
+    FontColor ClassFontColor
+    FontSize ClassFontSize
+}
+
+skinparam method {
+    BackgroundColor MethodBackgroundColor
+    BorderColor ClassBorderColor
+    FontColor MethodFontColor
+    FontSize MethodFontSize
+}
+
+
+start
+:Création de l'objet\nTirageDes 1d20;
+:Lancer les dés\n(Appel de la méthode lance());
+:Déclaration d'une variable qualite;
+if(resultat<5) then (true)
+    : qualite prend la valeur qualiteCommun;
+else if(resultat<10) then (true)
+    : qualite prend la valeur qualiteRare;
+else if((resultat<15) then (true)
+    : qualite prend la valeur qualiteEpic;
+else(false)
+    :qualite prend la valeur qualiteLegendaire;
+end if;
+:Création de l'armure magique de type Armure en cuir;
+:Ajout de l'armure dans l'inventaire de la cible;
+:Afficher le message "Une armure magique est ajouter a l'inventaire";
+:La cible equipe l'armure;
+end
+@enduml

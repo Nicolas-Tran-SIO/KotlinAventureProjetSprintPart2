@@ -19,12 +19,13 @@ val sortDeGuerison = Sort("Sort de Guérison") { caster, cible ->
     run {
         val tirageDes = TirageDes(1, 10)
         // on ajoute un bonus au soin qui corespond au bonus d'attaque/2
-        val soin = tirageDes.lance() + caster.attaque/2
+        val soin = tirageDes.lance() + caster.attaque / 2
         cible.pointDeVie += soin
+        if (cible.pointDeVie > cible.pointDeVieMax) cible.pointDeVie = cible.pointDeVieMax
         println("Le sort de guérison soigne ${soin} PV à ${cible.nom}")
     }
 }
-val sortProjectileMagique = Sort("Sort de projectile magique", { caster, cible ->
+val sortProjectileMagique = Sort("Sort de projectile magique") { caster, cible ->
     run {
         val tirageDes = TirageDes(1, 6)
         //On lance plusieurs fois projectile magique cela depend du score d'attaque
@@ -35,26 +36,27 @@ val sortProjectileMagique = Sort("Sort de projectile magique", { caster, cible -
             println("Le projectile magique inflige $degat à ${cible.nom}")
         }
     }
-})
+}
+
 
 val projectionAcide = Sort("Sort de projection acide", { caster, cible ->
     run {
         val tirageDes = TirageDes(1, 10)
-            var degat = tirageDes.lance()
-            degat = maxOf(1, degat - cible.calculeDefense())
-            cible.pointDeVie -= degat
-            println("Le jet d'acide inflige $degat à ${cible.nom}")
+        var degat = tirageDes.lance()
+        degat = maxOf(1, degat - cible.calculeDefense())
+        cible.pointDeVie -= degat
+        println("Le jet d'acide inflige $degat à ${cible.nom}")
 
     }
 })
 
 //instanciation des types d'armes
-val typeEpeeLongue = TypeArme("Epee longue", 1, 8, 2,20)
+val typeEpeeLongue = TypeArme("Epee longue", 1, 8, 2, 20)
 
-val typeEpeeCourte = TypeArme("Epee courte", 1, 6, 2,18)
-val typeDague = TypeArme("Epee courte", 1, 4, 3,15)
-val typeLance = TypeArme("Lance", 1, 6, 3,18)
-val typeMarteau = TypeArme("Marteau", 1, 8, 2,20)
+val typeEpeeCourte = TypeArme("Epee courte", 1, 6, 2, 18)
+val typeDague = TypeArme("Epee courte", 1, 4, 3, 15)
+val typeLance = TypeArme("Lance", 1, 6, 3, 18)
+val typeMarteau = TypeArme("Marteau", 1, 8, 2, 20)
 
 //instanciation des types d'armures
 val typeArmureCuir = TypeArmure("Armure en cuir", 1)
@@ -64,6 +66,42 @@ val qualiteCommun = Qualite("commun", 0, "\u001B[32m")
 val qualiteRare = Qualite("rare", 1, couleur = "\u001B[34m")
 val qualiteEpic = Qualite("epic", 2, "\u001B[35m")
 val qualiteLegendaire = Qualite("legendaire", 3, "\u001B[33m")
+
+val sortInvocatinArme = Sort("Sort d'invocation d'arme magique") { caster, cible ->
+    run {
+        val tirageDes = TirageDes(1, 20)
+        var resultat = tirageDes.lance()
+        val qualite = when {
+            resultat < 10 -> qualiteRare
+            resultat < 15 -> qualiteEpic
+            resultat <= 20 -> qualiteLegendaire
+            else -> qualiteCommun
+        }
+        val armeMagique = Arme("Epee magique", "Une arme magique", typeEpeeLongue, qualite)
+
+        cible.inventaire.add(armeMagique)
+        println("${armeMagique} est ajouté a l'inventaire de ${cible.nom}")
+        cible.equipe(armeMagique)
+    }
+}
+
+val sortInvocatinArmure = Sort("Sort d'invocation d'armure magique") { caster, cible ->
+    run {
+        val tirageDes = TirageDes(1, 20)
+        var resultat = tirageDes.lance()
+        val qualite = when {
+            resultat < 10 -> qualiteRare
+            resultat < 15 -> qualiteEpic
+            resultat <= 20 -> qualiteLegendaire
+            else -> qualiteCommun
+        }
+       val armureMagique= Armure("Armure magique", "Une armure magique",typeArmureCuir,qualite)
+
+        cible.inventaire.add(armureMagique)
+        println("${armureMagique} est ajouté a l'inventaire de ${cible.nom}")
+        cible.equipe(armureMagique)
+    }
+}
 
 
 fun main() {
