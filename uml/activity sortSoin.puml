@@ -22,14 +22,13 @@ skinparam method {
     FontSize MethodFontSize
 }
 
-
 start
-:Création de l'objet\nTirageDes 1d6;
+:Création de l'objet\nTirageDes 1d10;
 :Lancer les dés\n(Appel de la méthode lance());
 :Ajout du score d'attaque du caster/2;
-:Application des soins a la cible;
-if( Pv de la cible > pvMax de la cible) then (true)
-    : La cible a ses points vie egaux a ses pvMax;
+:Application des soins à la cible;
+if( PV de la cible > pvMax de la cible) then (true)
+    : La cible a ses points de vie égaux à ses pvMax;
 else  (false)
 endif
 end
