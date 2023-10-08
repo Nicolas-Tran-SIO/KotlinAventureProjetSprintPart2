@@ -1,10 +1,10 @@
 package jdbc
 
-import java.sql.Connection
-import java.sql.DriverManager
-import java.sql.PreparedStatement
-import java.sql.ResultSet
-import java.sql.SQLException
+
+
+
+import java.sql.*
+
 /**
  * Cette classe gère la connexion à une base de données JDBC et l'exécution de requêtes SQL préparées.
  *
@@ -13,11 +13,12 @@ import java.sql.SQLException
  * @property password Le mot de passe pour la connexion à la base de données.
  */
 class BDD(
-    var url: String = "jdbc:mysql://localhost:3306/votre_base_de_donnees",
-    var user: String = "votre_utilisateur",
-    var password: String = "votre_mot_de_passe",
+
+    var url: String = "jdbc:mysql://localhost:3306/db_kotlinAventure",
+    var user: String = "root",
+    var password: String = "",
 ) {
-    var connection: Connection? = null
+    var connectionBDD: Connection? = null
 
     /**
      * Initialise une instance de la classe BDD et établit une connexion à la base de données.
@@ -25,7 +26,7 @@ class BDD(
     init {
         try {
             // Établir une connexion à la base de données lors de la création de l'objet BDD
-            this.connection = getConnection()
+            this.connectionBDD = getConnection()
         } catch (erreur: SQLException) {
             // Gérer les exceptions liées à la connexion
             println("Erreur lors de la connexion à la base de données : ${erreur.message}")
@@ -37,7 +38,9 @@ class BDD(
      *
      * @return La connexion à la base de données.
      */
-    private fun getConnection(): Connection {
+    private fun getConnection(): java.sql.Connection? {
+       //Chargement du driver
+        Class.forName("com.mysql.cj.jdbc.Driver")
         // Créer et retourner une connexion à la base de données
         return DriverManager.getConnection(url, user, password)
     }
@@ -66,6 +69,6 @@ class BDD(
      */
     protected fun finalize() {
         // Fermer la connexion à la base de données lors de la finalisation de l'objet BDD
-        this.connection?.close()
+     this.connectionBDD?.close()
     }
 }

@@ -4,6 +4,8 @@ import model.jeu.Sort
 import model.jeu.TirageDes
 import model.item.*
 import model.personnage.Personnage
+import repository.QualiteRepository
+
 
 //instanciation de la co à la BDD
 val coBDD= BDD()
@@ -66,10 +68,10 @@ val typeMarteau = TypeArme("Marteau", 1, 8, 2, 20)
 val typeArmureCuir = TypeArmure("Armure en cuir", 1)
 
 //instanciation des qualités des objets
-val qualiteCommun = Qualite("commun", 0, "\u001B[32m")
-val qualiteRare = Qualite("rare", 1, couleur = "\u001B[34m")
-val qualiteEpic = Qualite("epic", 2, "\u001B[35m")
-val qualiteLegendaire = Qualite("legendaire", 3, "\u001B[33m")
+val qualiteCommun = Qualite(nom="commun", bonusRarete = 0, couleur = "\u001B[32m")
+val qualiteRare = Qualite(nom="rare", bonusRarete = 1, couleur = "\u001B[34m")
+val qualiteEpic = Qualite(nom = "epic", bonusRarete =  2, couleur =  "\u001B[35m")
+val qualiteLegendaire = Qualite(nom = "legendaire", bonusRarete =  3, couleur =  "\u001B[33m")
 
 val sortInvocatinArme = Sort("Sort d'invocation d'arme magique") { caster, cible ->
     run {
@@ -109,6 +111,9 @@ val sortInvocatinArmure = Sort("Sort d'invocation d'armure magique") { caster, c
 
 
 fun main() {
+    Class.forName("org.mariadb.jdbc.Connection")
+    val qualiteRepository = QualiteRepository(coBDD)
+    qualiteRepository.saveAll(mutableListOf(qualiteCommun,qualiteRare,qualiteEpic,qualiteLegendaire))
     //instanciation des armes des monstres
     val epee = Arme("Épée Courte", "Une épée courte tranchante", typeEpeeCourte, qualiteCommun)
     val lance = Arme("Lance", "Une lance pointue", typeLance, qualiteRare)
