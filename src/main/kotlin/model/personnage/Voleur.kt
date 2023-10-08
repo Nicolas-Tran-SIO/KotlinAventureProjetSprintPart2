@@ -1,4 +1,4 @@
-package personnage
+package model.personnage
 
 class Voleur(
     nom: String,

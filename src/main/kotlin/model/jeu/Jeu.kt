@@ -1,11 +1,11 @@
-package jeu
+package model.jeu
 
-import item.Arme
-import item.Potion
-import personnage.Guerrier
-import personnage.Mage
-import personnage.Personnage
-import personnage.Voleur
+import model.item.Arme
+import model.item.Potion
+import model.personnage.Guerrier
+import model.personnage.Mage
+import model.personnage.Personnage
+import model.personnage.Voleur
 import qualiteCommun
 import sortDeFeu
 import sortDeGuerison
@@ -100,7 +100,7 @@ class Jeu(monstres: List<Personnage>) {
             when (typePerso){
                 "guerrier"-> {
                     perso = Guerrier(leNom, pv, pvMax, scoreAttaque, scoreDefense, scoreEndurance, scoreVitesse)
-                    val maDague=Arme("Dague", "Une dague pointue", typeDague,qualiteCommun)
+                    val maDague= Arme("Dague", "Une dague pointue", typeDague,qualiteCommun)
                     perso.inventaire.add(maDague)
                     perso.armeSecondaireEquipee=maDague
                 }

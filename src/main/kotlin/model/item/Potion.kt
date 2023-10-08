@@ -1,6 +1,6 @@
-package item
+package model.item
 
-import personnage.Personnage
+import model.personnage.Personnage
 
 class Potion(
     nom: String,

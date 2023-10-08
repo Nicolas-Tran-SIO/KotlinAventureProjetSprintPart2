@@ -1,4 +1,4 @@
-package jeu
+package model.jeu
 
 class TirageDes(val nbDe:Int, val maxDe:Int) {
 

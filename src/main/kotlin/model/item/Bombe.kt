@@ -1,9 +1,9 @@
-package item
+package model.item
 
-import jeu.TirageDes
-import personnage.Personnage
+import model.jeu.TirageDes
+import model.personnage.Personnage
 
-class Bombe (nom:String, description:String ,val nombreDeDes:Int, val maxDe: Int):Item(nom,description) {
+class Bombe (nom:String, description:String ,val nombreDeDes:Int, val maxDe: Int): Item(nom,description) {
     override fun utiliser(cible: Personnage) {
         val deDegat= TirageDes(nombreDeDes,maxDe)
         var degat=deDegat.lance()

@@ -1,9 +1,9 @@
-package jeu
+package model.jeu
 
 
-import personnage.Mage
-import personnage.Personnage
-import personnage.Voleur
+import model.personnage.Mage
+import model.personnage.Personnage
+import model.personnage.Voleur
 
 
 class Combat(

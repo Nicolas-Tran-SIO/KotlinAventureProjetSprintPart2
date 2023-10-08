@@ -1,8 +1,12 @@
-import item.*
-import jeu.Jeu
-import jeu.Sort
-import jeu.TirageDes
-import personnage.Personnage
+import jdbc.BDD
+import model.jeu.Jeu
+import model.jeu.Sort
+import model.jeu.TirageDes
+import model.item.*
+import model.personnage.Personnage
+
+//instanciation de la co à la BDD
+val coBDD= BDD()
 
 // instanciation des Sorts (pour le(s) mage(s))
 val sortDeFeu = Sort("Boule de Feu") { caster, cible ->

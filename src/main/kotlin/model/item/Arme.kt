@@ -1,7 +1,7 @@
-package item
+package model.item
 
-import jeu.TirageDes
-import personnage.Personnage
+import model.jeu.TirageDes
+import model.personnage.Personnage
 
 class Arme(
     nom: String,

@@ -1,4 +1,4 @@
-package item
+package model.item
 
 class TypeArmure(val nom:String, val bonusType:Int) {
 }
