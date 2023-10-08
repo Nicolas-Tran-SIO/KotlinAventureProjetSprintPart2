@@ -4,26 +4,99 @@ import coBDD
 import jdbc.BDD
 import model.item.Qualite
 import java.sql.PreparedStatement
+import java.sql.SQLException
 import java.sql.Statement
 
-
+/**
+ * Cette classe représente un repository pour les objets Qualite, permettant d'effectuer des opérations de
+ * recherche et de sauvegarde dans la base de données.
+ *
+ * @param bdd L'objet de base de données à utiliser pour les opérations de base de données.
+ */
 class QualiteRepository(val bdd: BDD = coBDD) {
 
+    /**
+     * Recherche et retourne toutes les qualités de la base de données.
+     *
+     * @return Une liste de toutes les qualités trouvées.
+     */
     fun findAll(): List<Qualite> {
         var result = mutableListOf<Qualite>();
 
-        val sql = "Select * From Qualite"
+        val sql = "SELECT * FROM Qualite"
         val requetePreparer = this.bdd.connectionBDD!!.prepareStatement(sql)
         val resultatRequete = this.bdd.executePreparedStatement(requetePreparer)
         if (resultatRequete != null) {
             while (resultatRequete.next()) {
-                //TODO
+                val  id =resultatRequete.getInt("id")
+                val nom=resultatRequete.getString("nom")
+                val bonus= resultatRequete.getInt("bonusRarete")
+                val couleur= resultatRequete.getString("couleur")
+                result.add(Qualite(id,nom,bonus,couleur))
             }
         }
         requetePreparer.close()
         return result;
     }
 
+    /**
+     * Recherche et retourne une qualité par nom (retourne la première correspondance).
+     *
+     * @param nomRechecher Le nom à rechercher.
+     * @return La première qualité correspondant au nom donné, ou null si aucune n'est trouvée.
+     */
+    fun findByNom(nomRechecher:String): List<Qualite> {
+        var result = mutableListOf<Qualite>();
+
+        val sql = "SELECT * FROM Qualite WHERE nom=?"
+        val requetePreparer = this.bdd.connectionBDD!!.prepareStatement(sql)
+        requetePreparer?.setString(1, nomRechecher)
+        val resultatRequete = this.bdd.executePreparedStatement(requetePreparer)
+        if (resultatRequete != null) {
+            while (resultatRequete.next()) {
+                val  id =resultatRequete.getInt("id")
+                val nom=resultatRequete.getString("nom")
+                val bonus= resultatRequete.getInt("bonusRarete")
+                val couleur= resultatRequete.getString("couleur")
+                result.add(Qualite(id,nom,bonus,couleur))
+            }
+        }
+        requetePreparer.close()
+        return result;
+    }
+
+    /**
+     * Recherche et retourne une qualité par nom (retourne la première correspondance).
+     *
+     * @param nomRechecher Le nom à rechercher.
+     * @return La première qualité correspondant au nom donné, ou null si aucune n'est trouvée.
+     */
+    fun findById(nomRechecher:String): Qualite? {
+        var result :Qualite?=null
+        val sql = "SELECT * FROM Qualite WHERE nom=?"
+        val requetePreparer = this.bdd.connectionBDD!!.prepareStatement(sql)
+        requetePreparer?.setString(1, nomRechecher)
+        val resultatRequete = this.bdd.executePreparedStatement(requetePreparer)
+        if (resultatRequete != null) {
+            while (resultatRequete.next()) {
+                val  id =resultatRequete.getInt("id")
+                val nom=resultatRequete.getString("nom")
+                val bonus= resultatRequete.getInt("bonusRarete")
+                val couleur= resultatRequete.getString("couleur")
+                result=Qualite(id,nom,bonus,couleur)
+                requetePreparer.close()
+                return result
+            }
+        }
+        requetePreparer.close()
+        return result;
+    }
+    /**
+     * Sauvegarde une qualité dans la base de données.
+     *
+     * @param uneQualite L'objet Qualite à sauvegarder.
+     * @return L'objet Qualite sauvegardé, y compris son ID généré, ou null en cas d'échec.
+     */
     fun save(uneQualite: Qualite): Qualite? {
 
         val requetePreparer:PreparedStatement
@@ -67,6 +140,12 @@ class QualiteRepository(val bdd: BDD = coBDD) {
         return null
     }
 
+    /**
+     * Sauvegarde toutes les qualités dans la liste dans la base de données.
+     *
+     * @param lesQualites La liste des objets Qualite à sauvegarder.
+     * @return Une liste des objets Qualite sauvegardés, y compris leurs ID générés, ou null en cas d'échec.
+     */
     fun saveAll(lesQualites:MutableList<Qualite>):MutableList<Qualite>{
     var result= mutableListOf<Qualite>();
         for (uneQualite in lesQualites){
@@ -76,5 +155,29 @@ class QualiteRepository(val bdd: BDD = coBDD) {
             }
         }
         return result;
+    }
+
+    /**
+     * Supprime une qualité de la base de données en fonction de son ID.
+     *
+     * @param id L'ID de la qualité à supprimer.
+     * @return `true` si la qualité a été supprimée avec succès, sinon `false`.
+     */
+    fun deleteById(id: Int): Boolean {
+        val sql = "DELETE FROM Qualite WHERE id = ?"
+        val requetePreparer = this.bdd.connectionBDD!!.prepareStatement(sql)
+        requetePreparer?.setInt(1, id)
+        try {
+            val nbLigneMaj = requetePreparer?.executeUpdate()
+            requetePreparer.close()
+            if(nbLigneMaj!=null && nbLigneMaj>0){
+                return true
+            }else{
+                return false
+            }
+        } catch (erreur: SQLException) {
+            println("Une erreur est survenue lors de la suppression de la qualité : ${erreur.message}")
+            return false
+        }
     }
 }
