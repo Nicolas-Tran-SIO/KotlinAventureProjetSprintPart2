@@ -1,8 +1,6 @@
 package jdbc
 
 
-
-
 import java.sql.*
 
 /**

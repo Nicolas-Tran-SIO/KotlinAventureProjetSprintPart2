@@ -4,14 +4,13 @@ import model.jeu.Sort
 import model.jeu.TirageDes
 import model.item.*
 import model.personnage.Personnage
-import repository.QualiteRepository
-import service.GPTService
+import dao.QualiteDAO
 
 
 //instanciation de la co à la BDD
-//val coBDD= BDD()
+val coBDD= BDD()
 
-//val qualiteRepository = QualiteRepository(coBDD)
+val qualiteRepository = QualiteDAO(coBDD)
 
 
 // instanciation des Sorts (pour le(s) mage(s))
@@ -118,12 +117,12 @@ val sortInvocatinArmure = Sort("Sort d'invocation d'armure magique") { caster, c
 
 fun main() {
     //Sauvegarde des Qualites dans la BDD
-    //qualiteRepository.saveAll(mutableListOf(qualiteCommun,qualiteRare,qualiteEpic,qualiteLegendaire))
+    qualiteRepository.saveAll(mutableListOf(qualiteCommun,qualiteRare,qualiteEpic,qualiteLegendaire))
     //Recuperation des qualite de la bdd
-    //val qualites=qualiteRepository.findAll()
+    val qualites=qualiteRepository.findAll()
 
-    val gptService=GPTService()
-    gptService.fetchHistoire("Bonjour chat gpt ceci est un test")
+//    val gptService=GPTService()
+//    gptService.fetchHistoire("Bonjour chat gpt ceci est un test")
     //instanciation des armes des monstres
     val epee = Arme("Épée Courte", "Une épée courte tranchante", typeEpeeCourte, qualiteCommun)
     val lance = Arme("Lance", "Une lance pointue", typeLance, qualiteRare)

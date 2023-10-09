@@ -1,4 +1,5 @@
-package repository
+package dao
+
 
 import coBDD
 import jdbc.BDD
@@ -13,7 +14,7 @@ import java.sql.Statement
  *
  * @param bdd L'objet de base de données à utiliser pour les opérations de base de données.
  */
-class QualiteRepository(val bdd: BDD = coBDD) {
+class QualiteDAO(val bdd: BDD=coBDD ) {
 
     /**
      * Recherche et retourne toutes les qualités de la base de données.
@@ -112,12 +113,13 @@ class QualiteRepository(val bdd: BDD = coBDD) {
         } else {
             var sql = ""
             sql =
-                "Insert into Qualite (id,nom,bonusRarete,couleur) values (?,?,?,?)"
+                "Update  Qualite set nom=?,bonusRarete=?,couleur=? where id=?"
             requetePreparer = this.bdd.connectionBDD!!.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
-            requetePreparer?.setInt(1, uneQualite.id!!)
-            requetePreparer?.setString(2, uneQualite.nom)
-            requetePreparer?.setInt(3, uneQualite.bonusRarete)
-            requetePreparer?.setString(4, uneQualite.couleur)
+
+            requetePreparer?.setString(1, uneQualite.nom)
+            requetePreparer?.setInt(2, uneQualite.bonusRarete)
+            requetePreparer?.setString(3, uneQualite.couleur)
+            requetePreparer?.setInt(4, uneQualite.id!!)
         }
 
 
