@@ -1,9 +1,9 @@
-package personnage
+package model.personnage
 
-import item.Arme
-import item.Armure
-import item.Item
-import item.Potion
+import model.item.Arme
+import model.item.Armure
+import model.item.Item
+import model.item.Potion
 
 
 open class Personnage(

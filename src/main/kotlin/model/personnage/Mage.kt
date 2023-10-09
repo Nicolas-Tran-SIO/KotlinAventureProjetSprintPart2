@@ -1,6 +1,6 @@
-package personnage
+package model.personnage
 
-import jeu.Sort
+import model.jeu.Sort
 
 class Mage(
     nom: String,

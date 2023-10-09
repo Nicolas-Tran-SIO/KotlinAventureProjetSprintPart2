@@ -1,6 +1,6 @@
-package personnage
+package model.personnage
 
-import item.Arme
+import model.item.Arme
 
 class Guerrier(
     nom: String,

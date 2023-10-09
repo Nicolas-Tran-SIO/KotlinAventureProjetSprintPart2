@@ -1,6 +1,6 @@
-package item
+package model.item
 
-import personnage.Personnage
+import model.personnage.Personnage
 
 open class Item(val nom: String, val description: String) {
     open fun utiliser(cible: Personnage) {
