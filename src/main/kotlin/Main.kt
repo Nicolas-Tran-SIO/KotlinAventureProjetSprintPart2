@@ -5,6 +5,7 @@ import model.jeu.TirageDes
 import model.item.*
 import model.personnage.Personnage
 import dao.QualiteDAO
+import generateur.GenerateurQualites
 
 
 //instanciation de la co à la BDD
@@ -76,7 +77,13 @@ val qualiteRare = Qualite(nom="rare", bonusRarete = 1, couleur = "\u001B[34m")
 val qualiteEpic = Qualite(nom = "epic", bonusRarete =  2, couleur =  "\u001B[35m")
 val qualiteLegendaire = Qualite(nom = "legendaire", bonusRarete =  3, couleur =  "\u001B[33m")
 
-
+/*
+val mapQualite = GenerateurQualites("./assets/qualites.csv").generer()
+val qualiteCommun = mapQualite["commun"]!!
+val qualiteRare = mapQualite["rare"]!!
+val qualiteEpic = mapQualite["epic"]!!
+val qualiteLegendaire = mapQualite["legendaire"]!!
+*/
 
 val sortInvocatinArme = Sort("Sort d'invocation d'arme magique") { caster, cible ->
     run {

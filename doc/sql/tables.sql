@@ -1,3 +1,7 @@
+CREATE DATABASE db_kotlinAventure;
+
+USE db_kotlinAventure;
+
 CREATE TABLE Qualite
 (
     id          INT AUTO_INCREMENT,
