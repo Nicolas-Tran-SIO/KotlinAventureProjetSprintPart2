@@ -15,14 +15,15 @@ open class Personnage(
     var endurance: Int,
     var vitesse: Int,
     var armeEquipee: Arme? = null,
-    var armureEquipee: Armure?=null,
+    var armureEquipee: Armure? = null,
     val inventaire: MutableList<Item> = mutableListOf()
 ) {
 
-    fun calculeDefense():Int{
-        var resultat=this.defense/2;
-        var scoreArmure=(this.armureEquipee?.typeArmure?.bonusType ?: 0) + (this.armureEquipee?.qualite?.bonusRarete ?: 0)
-        resultat+=scoreArmure;
+    fun calculeDefense(): Int {
+        var resultat = this.defense / 2
+        val scoreArmure =
+            (this.armureEquipee?.typeArmure?.bonusType ?: 0) + (this.armureEquipee?.qualite?.bonusRarete ?: 0)
+        resultat += scoreArmure
         return resultat;
 
     }
@@ -30,10 +31,10 @@ open class Personnage(
     // Méthode pour attaquer un adversaire
     open fun attaquer(adversaire: Personnage) {
         // Vérifier si le personnage a une arme équipée
-        var degats = this.attaque/2
+        var degats = this.attaque / 2
         if (armeEquipee != null) {
             // Calculer les dégâts en utilisant les attributs du personnage et la méthode calculerDegat de l'arme
-             degats += this.armeEquipee!!.calculerDegats()
+            degats += this.armeEquipee!!.calculerDegats()
         }
         // Appliquer la défense de l'adversaire (au minimum au moins 1 de dégat)
         val degatsInfliges = maxOf(1, degats - adversaire.calculeDefense())
@@ -55,11 +56,10 @@ open class Personnage(
         }
     }
 
-    fun equipe(armure: Armure){
-        if(inventaire.contains(armure)){
-            this.armureEquipee=armure
-        }
-        else{
+    fun equipe(armure: Armure) {
+        if (inventaire.contains(armure)) {
+            this.armureEquipee = armure
+        } else {
             println("$nom n'a pas cette armure dans son inventaire.")
         }
     }
@@ -94,7 +94,7 @@ open class Personnage(
      */
     fun loot(cible: Personnage) {
         cible.armeEquipee = null
-        cible.armureEquipee =null
+        cible.armureEquipee = null
         this.inventaire.addAll(cible.inventaire)
         cible.inventaire.forEach({ println("${this.nom} récupère un/une $it") })
         println()

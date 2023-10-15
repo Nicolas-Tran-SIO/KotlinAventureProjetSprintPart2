@@ -7,11 +7,21 @@ import model.personnage.Personnage
 import dao.QualiteDAO
 import generateur.GenerateurQualites
 
+//DEMO MISSION 1
+val generateurQualites = GenerateurQualites("assets/qualites.csv")
 
+val qualites = generateurQualites.generer()
+
+//DEMO MISSION 2 :
+// TODO Retirer les commentaires des lignes 21 et 24
+// TODO : A la ligne 13 renomé la variable qualites en qualitesFromCSV
 //instanciation de la co à la BDD
-val coBDD= BDD()
-
-val qualiteRepository = QualiteDAO(coBDD)
+val coBDD = BDD()
+//instanciation d'un objet QualiteDAO
+//val qualiteRepository = QualiteDAO(coBDD)
+//
+//Sauvegarde des Qualites dans la BDD
+//val qualites=qualiteRepository.saveAll(qualitesFromCSV.values)
 
 
 // instanciation des Sorts (pour le(s) mage(s))
@@ -71,31 +81,17 @@ val typeMarteau = TypeArme("Marteau", 1, 8, 2, 20)
 //instanciation des types d'armures
 val typeArmureCuir = TypeArmure("Armure en cuir", 1)
 
-//instanciation des qualités des objets
-val qualiteCommun = Qualite(nom="commun", bonusRarete = 0, couleur = "\u001B[32m")
-val qualiteRare = Qualite(nom="rare", bonusRarete = 1, couleur = "\u001B[34m")
-val qualiteEpic = Qualite(nom = "epic", bonusRarete =  2, couleur =  "\u001B[35m")
-val qualiteLegendaire = Qualite(nom = "legendaire", bonusRarete =  3, couleur =  "\u001B[33m")
-
-/*
-val mapQualite = GenerateurQualites("./assets/qualites.csv").generer()
-val qualiteCommun = mapQualite["commun"]!!
-val qualiteRare = mapQualite["rare"]!!
-val qualiteEpic = mapQualite["epic"]!!
-val qualiteLegendaire = mapQualite["legendaire"]!!
-*/
-
 val sortInvocatinArme = Sort("Sort d'invocation d'arme magique") { caster, cible ->
     run {
         val tirageDes = TirageDes(1, 20)
         var resultat = tirageDes.lance()
         val qualite = when {
-            resultat < 10 -> qualiteRare
-            resultat < 15 -> qualiteEpic
-            resultat <= 20 -> qualiteLegendaire
-            else -> qualiteCommun
+            resultat < 10 -> qualites["rare"]
+            resultat < 15 -> qualites["epic"]
+            resultat <= 20 -> qualites["legendaire"]
+            else -> qualites["commun"]
         }
-        val armeMagique = Arme("Epee magique", "Une arme magique", typeEpeeLongue, qualite)
+        val armeMagique = Arme("Epee magique", "Une arme magique", typeEpeeLongue, qualite!!)
 
         cible.inventaire.add(armeMagique)
         println("${armeMagique} est ajouté a l'inventaire de ${cible.nom}")
@@ -108,12 +104,12 @@ val sortInvocatinArmure = Sort("Sort d'invocation d'armure magique") { caster, c
         val tirageDes = TirageDes(1, 20)
         var resultat = tirageDes.lance()
         val qualite = when {
-            resultat < 10 -> qualiteRare
-            resultat < 15 -> qualiteEpic
-            resultat <= 20 -> qualiteLegendaire
-            else -> qualiteCommun
+            resultat < 10 -> qualites["rare"]
+            resultat < 15 -> qualites["epic"]
+            resultat <= 20 -> qualites["legendaire"]
+            else -> qualites["commun"]
         }
-       val armureMagique= Armure("Armure magique", "Une armure magique",typeArmureCuir,qualite)
+        val armureMagique = Armure("Armure magique", "Une armure magique", typeArmureCuir, qualite!!)
 
         cible.inventaire.add(armureMagique)
         println("${armureMagique} est ajouté a l'inventaire de ${cible.nom}")
@@ -123,18 +119,11 @@ val sortInvocatinArmure = Sort("Sort d'invocation d'armure magique") { caster, c
 
 
 fun main() {
-    //Sauvegarde des Qualites dans la BDD
-    qualiteRepository.saveAll(mutableListOf(qualiteCommun,qualiteRare,qualiteEpic,qualiteLegendaire))
-    //Recuperation des qualite de la bdd
-    val qualites=qualiteRepository.findAll()
-
-//    val gptService=GPTService()
-//    gptService.fetchHistoire("Bonjour chat gpt ceci est un test")
     //instanciation des armes des monstres
-    val epee = Arme("Épée Courte", "Une épée courte tranchante", typeEpeeCourte, qualiteCommun)
-    val lance = Arme("Lance", "Une lance pointue", typeLance, qualiteRare)
-    val dague = Arme("Dague", "Une dague extrêmement pointue", typeDague, qualiteEpic)
-    val marteau = Arme("Marteau", "un marteau legendaire pourfendeur de troll", typeMarteau, qualiteLegendaire)
+    val epee = Arme("Épée Courte", "Une épée courte tranchante", typeEpeeCourte, qualites["commun"]!!)
+    val lance = Arme("Lance", "Une lance pointue", typeLance, qualites["rare"]!!)
+    val dague = Arme("Dague", "Une dague extrêmement pointue", typeDague, qualites["epic"]!!)
+    val marteau = Arme("Marteau", "un marteau legendaire pourfendeur de troll", typeMarteau, qualites["legendaire"]!!)
     // instanciation des potions et bombes des monstres
     val potionDeSoin1 = Potion("Potion de Soin", "Restaure les points de vie", 20)
     val potionDeSoin2 = Potion("Potion de Soin", "Restaure les points de vie", 20)
@@ -172,3 +161,9 @@ fun main() {
     jeu.lancerCombat()
 
 }
+
+//instanciation des qualités des objets
+//val qualiteCommun = Qualite(nom="commun", bonusRarete = 0, couleur = "\u001B[32m")
+//val qualiteRare = Qualite(nom="rare", bonusRarete = 1, couleur = "\u001B[34m")
+//val qualiteEpic = Qualite(nom = "epic", bonusRarete =  2, couleur =  "\u001B[35m")
+//val qualiteLegendaire = Qualite(nom = "legendaire", bonusRarete =  3, couleur =  "\u001B[33m")

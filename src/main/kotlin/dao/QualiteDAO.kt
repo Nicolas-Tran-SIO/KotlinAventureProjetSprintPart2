@@ -21,8 +21,8 @@ class QualiteDAO(val bdd: BDD=coBDD ) {
      *
      * @return Une liste de toutes les qualités trouvées.
      */
-    fun findAll(): List<Qualite> {
-        var result = mutableListOf<Qualite>();
+    fun findAll(): MutableMap<String,Qualite> {
+        val result = mutableMapOf<String,Qualite>()
 
         val sql = "SELECT * FROM Qualite"
         val requetePreparer = this.bdd.connectionBDD!!.prepareStatement(sql)
@@ -33,11 +33,11 @@ class QualiteDAO(val bdd: BDD=coBDD ) {
                 val nom=resultatRequete.getString("nom")
                 val bonus= resultatRequete.getInt("bonusRarete")
                 val couleur= resultatRequete.getString("couleur")
-                result.add(Qualite(id,nom,bonus,couleur))
+                result.set(nom.lowercase(),Qualite(id,nom,bonus,couleur))
             }
         }
         requetePreparer.close()
-        return result;
+        return result
     }
 
     /**
@@ -46,8 +46,8 @@ class QualiteDAO(val bdd: BDD=coBDD ) {
      * @param nomRechecher Le nom à rechercher.
      * @return La première qualité correspondant au nom donné, ou null si aucune n'est trouvée.
      */
-    fun findByNom(nomRechecher:String): List<Qualite> {
-        var result = mutableListOf<Qualite>();
+    fun findByNom(nomRechecher:String): MutableMap<String,Qualite> {
+        val result = mutableMapOf<String,Qualite>()
 
         val sql = "SELECT * FROM Qualite WHERE nom=?"
         val requetePreparer = this.bdd.connectionBDD!!.prepareStatement(sql)
@@ -59,24 +59,24 @@ class QualiteDAO(val bdd: BDD=coBDD ) {
                 val nom=resultatRequete.getString("nom")
                 val bonus= resultatRequete.getInt("bonusRarete")
                 val couleur= resultatRequete.getString("couleur")
-                result.add(Qualite(id,nom,bonus,couleur))
+                result.set(nom.lowercase(),Qualite(id,nom,bonus,couleur))
             }
         }
         requetePreparer.close()
-        return result;
+        return result
     }
 
     /**
      * Recherche et retourne une qualité par nom (retourne la première correspondance).
      *
-     * @param nomRechecher Le nom à rechercher.
+     * @param Int L'id à rechercher.
      * @return La première qualité correspondant au nom donné, ou null si aucune n'est trouvée.
      */
-    fun findById(nomRechecher:String): Qualite? {
+    fun findById(id:Int): Qualite? {
         var result :Qualite?=null
-        val sql = "SELECT * FROM Qualite WHERE nom=?"
+        val sql = "SELECT * FROM Qualite WHERE id=?"
         val requetePreparer = this.bdd.connectionBDD!!.prepareStatement(sql)
-        requetePreparer?.setString(1, nomRechecher)
+        requetePreparer?.setString(1, id.toString())
         val resultatRequete = this.bdd.executePreparedStatement(requetePreparer)
         if (resultatRequete != null) {
             while (resultatRequete.next()) {
@@ -90,7 +90,7 @@ class QualiteDAO(val bdd: BDD=coBDD ) {
             }
         }
         requetePreparer.close()
-        return result;
+        return result
     }
     /**
      * Sauvegarde une qualité dans la base de données.
@@ -103,8 +103,7 @@ class QualiteDAO(val bdd: BDD=coBDD ) {
         val requetePreparer:PreparedStatement
 
         if (uneQualite.id == null) {
-            var sql = ""
-            sql =
+            val sql =
                 "Insert Into Qualite (nom,bonusRarete,couleur) values (?,?,?)"
             requetePreparer = this.bdd.connectionBDD!!.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
             requetePreparer?.setString(1, uneQualite.nom)
@@ -148,15 +147,15 @@ class QualiteDAO(val bdd: BDD=coBDD ) {
      * @param lesQualites La liste des objets Qualite à sauvegarder.
      * @return Une liste des objets Qualite sauvegardés, y compris leurs ID générés, ou null en cas d'échec.
      */
-    fun saveAll(lesQualites:MutableList<Qualite>):MutableList<Qualite>{
-    var result= mutableListOf<Qualite>();
+    fun saveAll(lesQualites:Collection<Qualite>):MutableMap<String,Qualite>{
+    var result= mutableMapOf<String,Qualite>()
         for (uneQualite in lesQualites){
             val qualiteSauvegarde=this.save(uneQualite)
             if (qualiteSauvegarde!=null){
-                result+=qualiteSauvegarde
+                result.set(qualiteSauvegarde.nom.lowercase(),qualiteSauvegarde)
             }
         }
-        return result;
+        return result
     }
 
     /**

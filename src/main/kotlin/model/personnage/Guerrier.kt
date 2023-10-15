@@ -15,19 +15,18 @@ class Guerrier(
 
     override fun attaquer(adversaire: Personnage) {
         var degats: Int = 1
-        var bonusAtq=this.attaque/2
-        var cibleDef=adversaire.calculeDefense()
-        if (armeEquipee != null  ) {
+        val bonusAtq = this.attaque / 2
+        val cibleDef = adversaire.calculeDefense()
+        if (armeEquipee != null) {
             super.attaquer(adversaire)
 
         }
         if (armeSecondaireEquipee != null) {
             val degatsArme2 =
-                this.armeSecondaireEquipee!!.calculerDegats()-cibleDef + bonusAtq
+                this.armeSecondaireEquipee!!.calculerDegats() - cibleDef + bonusAtq
             degats += maxOf(1, degatsArme2)
-        }
-        else{
-            degats+=maxOf(bonusAtq-cibleDef,1)
+        } else {
+            degats += maxOf(bonusAtq - cibleDef, 1)
         }
 
         // Appliquer les dégâts à l'adversaire
