@@ -9,8 +9,8 @@ import model.personnage.Voleur
 import qualites
 import sortDeFeu
 import sortDeGuerison
-import sortInvocatinArme
-import sortInvocatinArmure
+import sortInvocationArme
+import sortInvocationArmure
 import sortProjectileMagique
 import typeDague
 import typeEpeeLongue
@@ -138,8 +138,8 @@ class Jeu(monstres: List<Personnage>) {
                 perso.grimoire.add(sortDeFeu)
                 perso.grimoire.add(sortDeGuerison)
                 perso.grimoire.add(sortProjectileMagique)
-                perso.grimoire.add(sortInvocatinArme)
-                perso.grimoire.add(sortInvocatinArmure)
+                perso.grimoire.add(sortInvocationArme)
+                perso.grimoire.add(sortInvocationArmure)
             }
             else -> perso = Personnage(leNom, pv, pvMax, scoreAttaque, scoreDefense, scoreEndurance, scoreVitesse)
         }

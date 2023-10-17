@@ -1,5 +1,4 @@
 package generateur
-
 import model.item.Bombe
 import java.nio.file.Paths
 import java.nio.file.Files
