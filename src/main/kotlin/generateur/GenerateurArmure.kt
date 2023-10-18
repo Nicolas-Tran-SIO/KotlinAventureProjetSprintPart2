@@ -8,7 +8,7 @@ import typeArmure
 import qualites
 class GenerateurArmure(val cheminFichier:String) {
     /**
-     * Génère et retourne un mapping des armure à partir des données contenues dans le fichier CSV.
+     * Génère et retourne un mapping des armures à partir des données contenues dans le fichier CSV.
      *
      * @return Un mapping des armure où la clé est le nom de l'armure en minuscules..
      */
